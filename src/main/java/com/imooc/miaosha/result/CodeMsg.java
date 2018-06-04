@@ -7,6 +7,7 @@ public class CodeMsg {
     public static CodeMsg SUCCESS = new CodeMsg(0, "succes");
     //通用异常 500100
     public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务端异常");
+    public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常: %s ");
     //登录模块 5002XX
     public static CodeMsg SESSION_ERROR = new CodeMsg(500210,"Session不存在或已经失效");
     public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500211,"登录密码不能为空");
@@ -24,6 +25,20 @@ public class CodeMsg {
     private CodeMsg(int i, String msg) {
         this.code = i;
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "CodeMsg{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
+
+    public CodeMsg fillArgs(Object... args) {
+        int code = this.getCode();
+        String message = String.format(this.msg, args);
+        return new CodeMsg(code, message);
     }
 
     public int getCode() {

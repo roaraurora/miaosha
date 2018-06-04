@@ -39,18 +39,10 @@ public class LoginController {
     @ResponseBody
     @IsMobile
     public Result<Boolean> doLogin(@Valid LoginVo loginVo) {
-        /* *
-         * 接收一个ajax提交的{mobile: *** ,password: ***}的json对象
-         * @param [loginVo]
-         * @return com.imooc.miaosha.result.Result<java.lang.Boolean>
-         */
+         // 接收一个ajax提交的{mobile: *** ,password: ***}的json对象
         log.info(loginVo.toString());
-        CodeMsg cm = miaoshaUserService.login(loginVo);
-        if (cm.getCode() == 0) {
-            return Result.success(true);
-        } else {
-            return Result.error(cm);
-        }
+        miaoshaUserService.login(loginVo); //登录失败会抛出GlobalException 进而被ExceptionHandler处理
+        return Result.success(true);
     }
 
 }
