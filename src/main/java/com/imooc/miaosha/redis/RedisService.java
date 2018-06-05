@@ -1,6 +1,9 @@
 package com.imooc.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.imooc.miaosha.controller.GoodsController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -11,6 +14,7 @@ public class RedisService {
 
     private JedisPool jedisPool;
 
+    private static Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
     public RedisService(JedisPool jedisPool) {
@@ -29,8 +33,7 @@ public class RedisService {
             jedis = jedisPool.getResource();
             String realKey = prefix.getPrefix() + key;
             String str = jedis.get(realKey);
-            T t = stringToBean(str, clazz);
-            return t;
+            return stringToBean(str, clazz);
         } finally {
             //释放jedis连接
             returnToPool(jedis);
@@ -39,7 +42,7 @@ public class RedisService {
 
     public <T> boolean set(KeyPrefix prefix, String key, T value) {
         /* *
-         * 设置单个对象
+         * 设置单个对象 将T类型的 value 序列化,并拼接出正确的key,将(key,value)存入redis
          * @param [prefix, key, value]
          * @return boolean
          */
@@ -56,7 +59,8 @@ public class RedisService {
                 jedis.set(realKey, str);
             } else {
                 //给value 加上一个有效期
-                jedis.setex(key, seconds, str);
+                String code = jedis.setex(realKey, seconds, str);
+                logger.info("setex to redis => " + code);
             }
             return true;
         } finally {
@@ -73,7 +77,7 @@ public class RedisService {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            String realKey = prefix.getPrefix()+key;
+            String realKey = prefix.getPrefix() + key;
             return jedis.exists(realKey);
         } finally {
             returnToPool(jedis);
@@ -89,7 +93,7 @@ public class RedisService {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            String realKey = prefix.getPrefix()+key;
+            String realKey = prefix.getPrefix() + key;
             return jedis.incr(realKey);
         } finally {
             returnToPool(jedis);
@@ -105,7 +109,7 @@ public class RedisService {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            String realKey = prefix.getPrefix()+key;
+            String realKey = prefix.getPrefix() + key;
             return jedis.decr(realKey);
         } finally {
             returnToPool(jedis);

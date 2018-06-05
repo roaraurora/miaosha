@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -38,10 +39,11 @@ public class LoginController {
     @RequestMapping("/do_login")
     @ResponseBody
     @IsMobile
-    public Result<Boolean> doLogin(@Valid LoginVo loginVo) {
-         // 接收一个ajax提交的{mobile: *** ,password: ***}的json对象
+    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
+        // 接收一个ajax提交的{mobile: *** ,password: ***}的json对象
         log.info(loginVo.toString());
-        miaoshaUserService.login(loginVo); //登录失败会抛出GlobalException 进而被ExceptionHandler处理
+        //登录失败会抛出GlobalException 进而被ExceptionHandler处理
+        miaoshaUserService.login(response, loginVo);
         return Result.success(true);
     }
 

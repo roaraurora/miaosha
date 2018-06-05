@@ -83,8 +83,9 @@
                  // Ajax请求成功时 根据返回的data.code判断是否成功
                 console.log(data);
                 if(data.code === 0) {
-                 // 成功时layer输出[成功]提示
-                    layer.msg("成功")
+                 // 成功时layer输出[成功]提示 并跳转
+                    layer.msg("成功");
+                    window.location.href = "/goods/to_list";
                 }else{
                  // 失败时layer根据data.msg输出对应的[失败]提示
                     layer.msg(data.msg)

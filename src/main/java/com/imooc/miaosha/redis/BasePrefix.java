@@ -12,7 +12,7 @@ public abstract class BasePrefix implements KeyPrefix {
         this(0,prefix);
     }
 
-    private BasePrefix(int expireSeconds, String prefix) {
+    BasePrefix(int expireSeconds, String prefix) {
         this.expireSeconds = expireSeconds;
         this.prefix = prefix;
     }
@@ -26,9 +26,10 @@ public abstract class BasePrefix implements KeyPrefix {
     @Override
     public String getPrefix() {
         /* *
-         * 模块 : 属性 ：值 构成整个前缀
+         * 模块 : 属性 ：值 构成整个Key
+         * 如 token => MiaoshaUserKey:tk+UUID  user => UserKey:id+id
          * @param []
-         * @return java.lang.String
+         * @return  key的前缀 : java.lang.String
          */
         String className = getClass().getSimpleName();
         return className + ":" + prefix;
