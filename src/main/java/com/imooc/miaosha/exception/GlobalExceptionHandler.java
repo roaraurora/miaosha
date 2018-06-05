@@ -1,7 +1,10 @@
 package com.imooc.miaosha.exception;
 
+import com.imooc.miaosha.controller.GoodsController;
 import com.imooc.miaosha.result.CodeMsg;
 import com.imooc.miaosha.result.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class) //value 为需要拦截的异常
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e){
+        e.printStackTrace();
         if (e instanceof GlobalException) {
             //捕获MiaoshaUserService.login()发出的GlobalException
             GlobalException exception = (GlobalException) e;

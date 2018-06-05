@@ -34,15 +34,8 @@ public class GoodsController {
     }
 
     @RequestMapping("/to_list")
-    public String toGoods(Model model,HttpServletResponse response,
-          @CookieValue(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false)String cookieToken,
-          @RequestParam(value = MiaoshaUserService.COOKIE_NAME_TOKEN,required = false)String paramToken) {
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
-            return "login";
-        }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
-        logger.info("get token success: token => "+token);
-        MiaoshaUser user = miaoshaUserService.getByToken(response,token);
+    public String toGoods(Model model, MiaoshaUser user){
+        //user对象由resolver注入
         model.addAttribute("user", user);
         return "goods_list";
     }

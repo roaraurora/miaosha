@@ -42,16 +42,15 @@ public class MiaoshaUserService {
     }
 
     public MiaoshaUser getByToken(HttpServletResponse response, String token) {
+        //通过token得到对应的session的user对象
         if (StringUtils.isEmpty(token)) {
             return null;
         }
-        //MiaoshaUser user = new MiaoshaUser();
         //todo 这里默认用户上传的token是合法的token 并没有对token有误 (user=null)的情况进行处理
         MiaoshaUser user = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
-        //延长有效期
         if (user != null) {
-            //todo 每通过分布式session从redis里取出来一个对应的user对象,都会产生一条新的记录存入redis 是不是应该考虑把上一条记录删除
-            setCookie(response, user);
+            //更新cookie有效期
+            updateCookie(response, token);
         }
         return user;
     }
@@ -79,7 +78,7 @@ public class MiaoshaUserService {
     }
 
     private void setCookie(HttpServletResponse response, MiaoshaUser user) {
-        //生成cookie
+        //生成cookie 并添加给response对象
         String token = UUIDUtil.uuid();
         redisService.set(MiaoshaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
@@ -87,4 +86,18 @@ public class MiaoshaUserService {
         cookie.setPath("/"); //todo figure out what path is this
         response.addCookie(cookie);
     }
+
+    private void updateCookie(HttpServletResponse response, String token) {
+        /* *
+         * @description: 生成一个cookie,token不变只更新了过期时间
+         * @param: [response, token]
+         * @return: void
+         */
+        redisService.updateExpire(MiaoshaUserKey.token, token);
+        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+    
 }

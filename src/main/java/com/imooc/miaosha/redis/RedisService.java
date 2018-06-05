@@ -68,6 +68,23 @@ public class RedisService {
         }
     }
 
+    public Long updateExpire(KeyPrefix prefix, String key) {
+        /* *
+         * 更新过期时间
+         * @param [prefix, key]
+         * @return boolean
+         */
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = prefix.getPrefix() + key;
+            Long statusCode =  jedis.expire(realKey, prefix.expireSeconds());
+            return statusCode;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
     public boolean exist(KeyPrefix prefix, String key) {
         /* *
          * 判断是否存在
@@ -117,6 +134,7 @@ public class RedisService {
     }
 
     private <T> String beanToString(T value) {
+        //序列化
         if (value == null) {
             return null;
         }
@@ -144,6 +162,7 @@ public class RedisService {
 
     @SuppressWarnings("unchecked")
     private <T> T stringToBean(String str, Class<T> clazz) {
+        //反序列化
         if (str == null || str.length() <= 0 || clazz == null) {
             return null;
         }
