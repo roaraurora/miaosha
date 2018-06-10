@@ -83,7 +83,7 @@ public class MiaoshaUserService {
         redisService.set(MiaoshaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
-        cookie.setPath("/"); //todo figure out what path is this
+        cookie.setPath("/");// cookie的作用域 指定cookie发送范围的文件目录 默认为文档所在的目录
         response.addCookie(cookie);
     }
 
