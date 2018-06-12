@@ -101,6 +101,24 @@ public class OrderInfo {
     }
 
     public void setPayDate(Date payDate) {
+
         this.payDate = payDate;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderInfo{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", goodsId=" + goodsId +
+                ", deliveryAddrId=" + deliveryAddrId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsCount=" + goodsCount +
+                ", goodsPrice=" + goodsPrice +
+                ", orderChannel=" + orderChannel +
+                ", status=" + status +
+                ", createDate=" + createDate +
+                ", payDate=" + payDate +
+                '}';
     }
 }

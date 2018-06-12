@@ -58,6 +58,10 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     private String getCookieValue(HttpServletRequest request, String cookieName) {
         //从request的cookie列表里获取对应的cookie
         Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            //  当未登录状态访问 需要 接收一个 user 的 controller 时, 列表cookies为空 ,不判断会导致np异常
+            return null;
+        }
         for (Cookie c:cookies) {
             if (c.getName().equals(cookieName)){
                 return c.getValue();

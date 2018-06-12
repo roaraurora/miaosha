@@ -37,4 +37,14 @@ public class MiaoshaOrder {
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
     }
+
+    @Override
+    public String toString() {
+        return "MiaoshaOrder{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", orderId=" + orderId +
+                ", goodsId=" + goodsId +
+                '}';
+    }
 }

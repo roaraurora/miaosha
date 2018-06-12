@@ -16,7 +16,7 @@ CREATE TABLE order_info (
   COMMENT '1.pc, 2.android, 3.ios',
   status           TINYINT(4)          DEFAULT '0'
   COMMENT '订单状态: 0.新建未支付, 1.已支付, 2.已发货, 3.已收获, 4.已退款, 5.已完成',
-  crate_date       DATETIME            DEFAULT NULL
+  create_date       DATETIME            DEFAULT NULL
   COMMENT '订单的创建时间',
   pay_date         DATETIME            DEFAULT NULL
   COMMENT '支付时间',
