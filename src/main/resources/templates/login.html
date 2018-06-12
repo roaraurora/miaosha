@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>登录</title>
+    <meta charset="UTF-8" http-equiv="content-type" content="text/html" />
 
     <!--jquery-->
-    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <!--bootstrap-->
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
@@ -25,13 +25,15 @@
 <form name="loginForm" id="loginForm" method="post" style="width:50%;margin: 0 auto;">
     <h2 style="text-align: center;margin-bottom:20px;">用户登录</h2>
     <div class="form-group">
-        <label class="form-label col-md-4">请输入手机号码</label>
-        <div class="col-md-5">
-            <input type="text" class="form-control" id="mobile"
-                   placeholder="手机号码" required="true" minlength="11" maxlength="11">
-        </div>
-        <div class="col-md-1">
+        <div class="row">
+            <label class="form-label col-md-4">请输入手机号码</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" id="mobile" name="mobile"
+                       placeholder="手机号码" required="true" minlength="11" maxlength="11">
+            </div>
+            <div class="col-md-1">
 
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -55,8 +57,9 @@
 </body>
 <script>
     function login() {
+        //todo jquery-validate报了一个神奇的错误 至今不知道它怎么就消失了
         $("#loginForm").validate({
-            submitHandler: function (form) {
+            submitHandler: function () {
                 doLogin();
             }
         });
@@ -79,14 +82,14 @@
             },
             success: function (data) {
                 layer.closeAll();
-                 // Ajax请求成功时 根据返回的data.code判断是否成功
+                // Ajax请求成功时 根据返回的data.code判断是否成功
                 console.log(data);
-                if(data.code === 0) {
-                 // 成功时layer输出[成功]提示 并跳转
+                if (data.code === 0) {
+                    // 成功时layer输出[成功]提示 并跳转
                     layer.msg("成功");
                     window.location.href = "/goods/to_list";
-                }else{
-                 // 失败时layer根据data.msg输出对应的[失败]提示
+                } else {
+                    // 失败时layer根据data.msg输出对应的[失败]提示
                     layer.msg(data.msg)
                 }
             },

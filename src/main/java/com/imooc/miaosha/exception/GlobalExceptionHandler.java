@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class) //value 为需要拦截的异常
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e){
-        e.printStackTrace();
+        //e.printStackTrace(); //打印堆栈
         if (e instanceof GlobalException) {
             //捕获MiaoshaUserService.login()发出的GlobalException
             GlobalException exception = (GlobalException) e;

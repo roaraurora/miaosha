@@ -6,7 +6,7 @@ import java.util.Date;
 public class OrderInfo {
     private Long id;
     private Long userId;
-    private Long goodsd;
+    private Long goodsId;
     private Long deliveryAddrId;
     private String goodsName;
     private Integer goodsCount;
@@ -32,12 +32,12 @@ public class OrderInfo {
         this.userId = userId;
     }
 
-    public Long getGoodsd() {
-        return goodsd;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
-    public void setGoodsd(Long goodsd) {
-        this.goodsd = goodsd;
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
     public Long getDeliveryAddrId() {

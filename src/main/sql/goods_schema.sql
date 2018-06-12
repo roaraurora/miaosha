@@ -19,7 +19,7 @@ CREATE TABLE goods (
   DEFAULT CHARSET = utf8mb4;
 
 # 插入数据
-INSERT INTO goods VALUES (1, 'iPhoneX', 'Apple iPhone X(A1856) 64GB 银色 移动联通电信4G手机', '/img/iphonex.png',
-                          'Apple iPhone X(A1856) 64GB 银色 移动联通电信4G手机', 8765.00, 10000),
-  (2, '华为Mate9', '华为 Mate9 4GB+32GB版 月光银 移动联通电信4G手机 双卡双待', '/img/mate9.png', '华为 Mate9 4GB+32GB版 月光银 移动联通电信4G手机 双卡双待',
+INSERT INTO goods VALUES (1, 'iPhoneX', 'Apple iPhone X(A1856) 64GB 银色 移动联通电信4G手机',
+                                          'Apple iPhone X(A1856) 64GB 银色 移动联通电信4G手机', '/img/iphonex.png', 8765.00, 10000),
+  (2, '华为Mate9', '华为 Mate9 4GB+32GB版 月光银 移动联通电信4G手机 双卡双待', '华为 Mate9 4GB+32GB版 月光银 移动联通电信4G手机 双卡双待', '/img/mate9.png',
    3212.00, -1);

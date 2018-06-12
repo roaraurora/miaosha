@@ -1,15 +1,17 @@
-package com.imooc.miaosha.domain;
+package com.imooc.miaosha.vo;
+
+import com.imooc.miaosha.domain.Goods;
 
 import java.util.Date;
 
-public class MiaoshaGoods {
-    private Long id;
-    private Long goodsId;
-    private Double miaoshaPrice;
+public class GoodsVo extends Goods {
+    /* *
+     * 通过继承Goods再加上一些需要的MiaoshaGoods的属性,达到把商品和秒杀订单整合到一块
+     */
     private Integer stockCount;
     private Date startDate;
     private Date endDate;
-
+    private Double miaoshaPrice;
 
     public Double getMiaoshaPrice() {
         return miaoshaPrice;
@@ -19,21 +21,6 @@ public class MiaoshaGoods {
         this.miaoshaPrice = miaoshaPrice;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
 
     public Integer getStockCount() {
         return stockCount;
